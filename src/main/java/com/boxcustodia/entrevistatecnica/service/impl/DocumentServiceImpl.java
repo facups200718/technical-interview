@@ -63,7 +63,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     private static String bytesToHex(byte[] bytes) {
-        StringBuilder result = new StringBuilder();
+        var result = new StringBuilder();
         for (byte b : bytes) {
             result.append(String.format("%02X", b));
         }
