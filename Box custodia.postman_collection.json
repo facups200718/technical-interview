@@ -1,0 +1,44 @@
+{
+	"info": {
+		"_postman_id": "72ee0a88-85d1-43f6-a18e-35fc16938afc",
+		"name": "Box custodia",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Upload Documents",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "documents",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8080/documents/hash?hashType=SHA-256",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"documents",
+						"hash"
+					],
+					"query": [
+						{
+							"key": "hashType",
+							"value": "SHA-256"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,32 +1,32 @@
 package com.boxcustodia.entrevistatecnica.controller.impl;
 
 import com.boxcustodia.entrevistatecnica.controller.DocumentController;
+
+import com.boxcustodia.entrevistatecnica.service.DocumentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
-
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-@Controller
+@RestController
 @RequestMapping("/api")
 public class DocumentControllerImpl implements DocumentController {
+
+    @Autowired
+    private DocumentService documentService;
+
     @Override
     @PostMapping("/documents/hash")
-    public ResponseEntity uploadDocuments(@RequestParam String hashType, @RequestBody List<String> documents) {
-        return null;
+    public ResponseEntity uploadDocuments(@RequestParam String hashType,
+                                          @RequestParam(name = "documents") List<MultipartFile> documents) {
+        return documentService.uploadDocuments(hashType, documents);
     }
 
     @Override
     @GetMapping("/documents")
-    public ResponseEntity getAllDocuments() {
-        return null;
+    public ResponseEntity getDocuments(@RequestParam(required = false) String hashType,
+                                       @RequestParam(required = false) String hash) {
+        return documentService.getDocuments(hashType, hash);
     }
-
-    @Override
-    @GetMapping("/document")
-    public ResponseEntity getDocumentByHash(@RequestParam String hashType, @RequestParam String hash) {
-        return null;
-    }
-
-
 }
