@@ -9,7 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -29,5 +29,5 @@ public class DocumentEntity {
     private String hashSha512;
 
     @Column(name = "last_upload")
-    private LocalDate lastUpload;
+    private LocalDateTime lastUpload;
 }

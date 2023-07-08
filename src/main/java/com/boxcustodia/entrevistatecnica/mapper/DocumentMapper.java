@@ -1,5 +1,6 @@
 package com.boxcustodia.entrevistatecnica.mapper;
 
+import com.boxcustodia.entrevistatecnica.dto.in.DocumentByHashInResponseDTO;
 import com.boxcustodia.entrevistatecnica.dto.in.DocumentInResponseDTO;
 import com.boxcustodia.entrevistatecnica.entity.DocumentEntity;
 import org.mapstruct.Mapper;
@@ -15,4 +16,8 @@ public interface DocumentMapper {
     @Mapping(source = "lastUpload", target = "lastUpload")
     DocumentInResponseDTO toDTO(DocumentEntity documentEntity);
     List<DocumentInResponseDTO> toDTOs(List<DocumentEntity> documentEntities);
+
+    @Mapping(source = "fileName", target = "fileName")
+    @Mapping(source = "lastUpload", target = "lastUpload")
+    DocumentByHashInResponseDTO byHashToDTO(DocumentEntity documentEntity);
 }

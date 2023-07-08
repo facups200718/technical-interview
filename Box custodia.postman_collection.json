@@ -17,8 +17,9 @@
 							"key": "documents",
 							"type": "file",
 							"src": [
-								"/C:/Users/Facu/Desktop/Juegos/01-03.txt",
-								"/C:/Users/Facu/Desktop/Juegos/01-11.txt"
+								"/C:/Users/Facu/Desktop/Juegos/INTERNET BAJA.txt",
+								"/C:/Users/Facu/Desktop/Juegos/08-07.txt",
+								"/C:/Users/Facu/Desktop/Juegos/08-02.txt"
 							]
 						}
 					]
@@ -58,6 +59,35 @@
 					"path": [
 						"api",
 						"documents"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get document by hash",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/api/documents?hashType=SHA-256&hash=F1834363342C9A361DB3A6E743A02188EE126F1D90CF5694B005E1056160267D",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"documents"
+					],
+					"query": [
+						{
+							"key": "hashType",
+							"value": "SHA-256"
+						},
+						{
+							"key": "hash",
+							"value": "F1834363342C9A361DB3A6E743A02188EE126F1D90CF5694B005E1056160267D"
+						}
 					]
 				}
 			},

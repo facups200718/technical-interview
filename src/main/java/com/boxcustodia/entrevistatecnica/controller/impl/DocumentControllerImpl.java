@@ -34,6 +34,6 @@ public class DocumentControllerImpl implements DocumentController {
     @GetMapping(params = {"hashType", "hash"})
     public ResponseEntity findDocumentByHash(@RequestParam String hashType,
                                              @RequestParam String hash) {
-        return null;
+        return documentService.findDocumentByHash(hashType, hash);
     }
 }

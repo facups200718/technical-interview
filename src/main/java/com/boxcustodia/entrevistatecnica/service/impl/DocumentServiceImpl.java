@@ -25,6 +25,7 @@ public class DocumentServiceImpl implements DocumentService {
     private final DocumentRepository documentRepository;
 
     private static final String ERROR_MESSAGE = "Se produjo un error.";
+    private static final String NOT_FOUND_ERROR_MESSAGE = "No hay ningún documento con ese nombre.";
 
     @Override
     public ResponseEntity uploadDocuments(String hashType, List<MultipartFile> documents) {
@@ -52,6 +53,8 @@ public class DocumentServiceImpl implements DocumentService {
                         .hash(hash)
                         .fileName(document.getOriginalFilename())
                         .build();
+
+                documentRepository.uploadDocuments(hashType, hashedDocument);
                 hashedDocuments.add(hashedDocument);
             }
         } catch (NoSuchAlgorithmException | IOException e) {
@@ -77,6 +80,14 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public ResponseEntity findDocumentByHash(String hashType, String hash) {
-        return null;
+        if (!HashType.isValid(hashType)) {
+            return ResponseEntity.badRequest().body(ERROR_MESSAGE);
+        }
+
+        try {
+            return ResponseEntity.ok(documentRepository.findDocumentByHash(hashType, hash));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(NOT_FOUND_ERROR_MESSAGE);
+        }
     }
 }

@@ -11,9 +11,8 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DocumentInResponseDTO {
+public class DocumentByHashInResponseDTO {
     private String fileName;
-    private String hashSha256;
-    private String hashSha512;
+    private String hash;
     private LocalDateTime lastUpload;
 }
