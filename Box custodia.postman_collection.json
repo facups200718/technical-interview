@@ -16,17 +16,21 @@
 						{
 							"key": "documents",
 							"type": "file",
-							"src": []
+							"src": [
+								"/C:/Users/Facu/Desktop/Juegos/01-03.txt",
+								"/C:/Users/Facu/Desktop/Juegos/01-11.txt"
+							]
 						}
 					]
 				},
 				"url": {
-					"raw": "localhost:8080/documents/hash?hashType=SHA-256",
+					"raw": "localhost:8081/api/documents/hash?hashType=SHA-256",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8081",
 					"path": [
+						"api",
 						"documents",
 						"hash"
 					],
@@ -35,6 +39,25 @@
 							"key": "hashType",
 							"value": "SHA-256"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all documents",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/api/documents",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"documents"
 					]
 				}
 			},
