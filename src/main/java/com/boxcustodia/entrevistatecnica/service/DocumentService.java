@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface DocumentService {
     ResponseEntity uploadDocuments(String hashType, List<MultipartFile> documents);
-    ResponseEntity getDocuments(String hashType, String hash);
+    ResponseEntity getAllDocuments();
+    ResponseEntity findDocumentByHash(String hashType, String hash);
 }

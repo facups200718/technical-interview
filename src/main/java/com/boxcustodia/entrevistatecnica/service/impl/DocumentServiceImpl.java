@@ -5,22 +5,24 @@ import com.boxcustodia.entrevistatecnica.dto.model.DocumentDTO;
 import com.boxcustodia.entrevistatecnica.enums.HashType;
 import com.boxcustodia.entrevistatecnica.repository.DocumentRepository;
 import com.boxcustodia.entrevistatecnica.service.DocumentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DocumentServiceImpl implements DocumentService {
-    @Autowired
-    private DocumentRepository documentRepository;
+    private final DocumentRepository documentRepository;
 
     private static final String ERROR_MESSAGE = "Se produjo un error.";
 
@@ -44,7 +46,7 @@ public class DocumentServiceImpl implements DocumentService {
 
             for (MultipartFile document : documents) {
                 byte[] fileBytes = document.getBytes();
-                byte[] hashBytes = messageDigest.digest(fileBytes);
+                Byte[] hashBytes = ArrayUtils.toObject(messageDigest.digest(fileBytes));
                 String hash = bytesToHex(hashBytes);
                 var hashedDocument = DocumentDTO.builder()
                         .hash(hash)
@@ -62,16 +64,19 @@ public class DocumentServiceImpl implements DocumentService {
                 .build();
     }
 
-    private static String bytesToHex(byte[] bytes) {
+    private static String bytesToHex(Byte[] bytes) {
         var result = new StringBuilder();
-        for (byte b : bytes) {
-            result.append(String.format("%02X", b));
-        }
+        Arrays.stream(bytes).forEach(b -> result.append(String.format("%02X", b)));
         return result.toString();
     }
 
     @Override
-    public ResponseEntity getDocuments(String hashType, String hash) {
+    public ResponseEntity getAllDocuments() {
+        return ResponseEntity.ok(documentRepository.findAllDocuments());
+    }
+
+    @Override
+    public ResponseEntity findDocumentByHash(String hashType, String hash) {
         return null;
     }
 }
