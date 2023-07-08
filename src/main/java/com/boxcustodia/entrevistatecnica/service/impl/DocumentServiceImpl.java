@@ -1,42 +1,41 @@
 package com.boxcustodia.entrevistatecnica.service.impl;
 
 import com.boxcustodia.entrevistatecnica.dto.in.DocumentUploadInResponseDTO;
+import com.boxcustodia.entrevistatecnica.dto.in.ErrorInResponseDTO;
 import com.boxcustodia.entrevistatecnica.dto.model.DocumentDTO;
 import com.boxcustodia.entrevistatecnica.enums.HashType;
 import com.boxcustodia.entrevistatecnica.repository.DocumentRepository;
 import com.boxcustodia.entrevistatecnica.service.DocumentService;
+import com.boxcustodia.entrevistatecnica.util.ErrorUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class DocumentServiceImpl implements DocumentService {
     private final DocumentRepository documentRepository;
 
-    private static final String ERROR_MESSAGE = "Se produjo un error.";
-    private static final String NOT_FOUND_ERROR_MESSAGE = "No hay ningún documento con ese nombre.";
+    private static final String NO_FILES_ERROR = "Se produjo un error. No se subieron archivos.";
+    private static final String NOT_FOUND_ERROR = "No hay ningún documento con ese nombre.";
+    private static final String WRONG_HASH = "El parámetro ‘hash’ solo puede ser ‘SHA-256’ o ‘SHA-512’";
 
     @Override
     public ResponseEntity uploadDocuments(String hashType, List<MultipartFile> documents) {
-        Boolean validHash = HashType.isValid(hashType);
-        Boolean emptyDocument = documents.isEmpty();
+        if (documents.isEmpty()) return ErrorUtil.getErrorResponse(400, NO_FILES_ERROR);
+        if (HashType.isValid(hashType)) return ErrorUtil.getErrorResponse(400, WRONG_HASH);
 
-        if (Boolean.TRUE.equals(validHash) && Boolean.FALSE.equals(emptyDocument)) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(upsertDocuments(hashType, documents));
-        }
-
-        return ResponseEntity.badRequest().body(ERROR_MESSAGE);
+        return ResponseEntity.status(HttpStatus.CREATED).body(upsertDocuments(hashType, documents));
     }
 
     private DocumentUploadInResponseDTO upsertDocuments(String hashType, List<MultipartFile> documents) {
@@ -80,14 +79,14 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     public ResponseEntity findDocumentByHash(String hashType, String hash) {
-        if (!HashType.isValid(hashType)) {
-            return ResponseEntity.badRequest().body(ERROR_MESSAGE);
-        }
+        if (!HashType.isValid(hashType)) return ErrorUtil.getErrorResponse(400, WRONG_HASH);
 
         try {
             return ResponseEntity.ok(documentRepository.findDocumentByHash(hashType, hash));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(NOT_FOUND_ERROR_MESSAGE);
+            return ErrorUtil.getErrorResponse(404, NOT_FOUND_ERROR);
         }
     }
+
+
 }

@@ -4,8 +4,6 @@ import com.boxcustodia.entrevistatecnica.controller.DocumentController;
 
 import com.boxcustodia.entrevistatecnica.service.DocumentService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
