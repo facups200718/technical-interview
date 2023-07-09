@@ -1,9 +1,6 @@
 package com.boxcustodia.entrevistatecnica.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,4 +27,8 @@ public class DocumentEntity {
 
     @Column(name = "last_upload")
     private LocalDateTime lastUpload;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id", referencedColumnName = "username")
+    private UserEntity accountId;
 }

@@ -1,7 +1,8 @@
 package com.boxcustodia.entrevistatecnica.service.impl;
 
+import com.boxcustodia.entrevistatecnica.dto.in.UserInResponseDTO;
 import com.boxcustodia.entrevistatecnica.entity.UserEntity;
-import com.boxcustodia.entrevistatecnica.repository.UserJpaRepository;
+import com.boxcustodia.entrevistatecnica.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,11 +18,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserDetailsService {
-    private final UserJpaRepository userRepository;
+    private final UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity userEntity = this.userRepository.findById(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found."));
+        UserInResponseDTO userEntity = this.userRepository.findById(username);
 
         System.out.println(userEntity);
 
@@ -44,10 +44,10 @@ public class UserServiceImpl implements UserDetailsService {
     private List<GrantedAuthority> grantedAuthorities(String[] roles) {
         List<GrantedAuthority> authorities = new ArrayList<>(roles.length);
 
-        for (String role: roles) {
+        for (String role : roles) {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
 
-            for (String authority: this.getAuthorities(role)) {
+            for (String authority : this.getAuthorities(role)) {
                 authorities.add(new SimpleGrantedAuthority(authority));
             }
         }
