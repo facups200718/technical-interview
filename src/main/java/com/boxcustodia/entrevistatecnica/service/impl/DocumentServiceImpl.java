@@ -1,7 +1,6 @@
 package com.boxcustodia.entrevistatecnica.service.impl;
 
 import com.boxcustodia.entrevistatecnica.dto.in.DocumentUploadInResponseDTO;
-import com.boxcustodia.entrevistatecnica.dto.in.ErrorInResponseDTO;
 import com.boxcustodia.entrevistatecnica.dto.model.DocumentDTO;
 import com.boxcustodia.entrevistatecnica.enums.HashType;
 import com.boxcustodia.entrevistatecnica.repository.DocumentRepository;
@@ -11,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -33,7 +30,7 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public ResponseEntity uploadDocuments(String hashType, List<MultipartFile> documents) {
         if (documents.isEmpty()) return ErrorUtil.getErrorResponse(400, NO_FILES_ERROR);
-        if (HashType.isValid(hashType)) return ErrorUtil.getErrorResponse(400, WRONG_HASH);
+        if (!HashType.isValid(hashType)) return ErrorUtil.getErrorResponse(400, WRONG_HASH);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(upsertDocuments(hashType, documents));
     }

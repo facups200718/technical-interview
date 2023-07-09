@@ -9,23 +9,25 @@
 			"name": "Upload Documents",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZSIsImlzcyI6ImJveC1jdXN0b2RpYSIsImV4cCI6MTY5MDE3MzE2MSwiaWF0IjoxNjg4ODc3MTYxfQ.eNxtSKsD0H5PeOQAQetB_BcMe9n_dY0wuZMkZ0yRZFo",
+						"type": "default"
+					}
+				],
 				"body": {
 					"mode": "formdata",
 					"formdata": [
 						{
 							"key": "documents",
 							"type": "file",
-							"src": [
-								"/C:/Users/Facu/Desktop/Juegos/INTERNET BAJA.txt",
-								"/C:/Users/Facu/Desktop/Juegos/08-07.txt",
-								"/C:/Users/Facu/Desktop/Juegos/08-02.txt"
-							]
+							"src": "/C:/Users/Facu/Desktop/Juegos/11-10.txt"
 						}
 					]
 				},
 				"url": {
-					"raw": "localhost:8081/api/documents/hash?hashType=SHA-256",
+					"raw": "localhost:8081/api/documents/hash?hashType=SHA-512",
 					"host": [
 						"localhost"
 					],
@@ -38,7 +40,7 @@
 					"query": [
 						{
 							"key": "hashType",
-							"value": "SHA-256"
+							"value": "SHA-512"
 						}
 					]
 				}
@@ -49,7 +51,13 @@
 			"name": "Get all documents",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZSIsImlzcyI6ImJveC1jdXN0b2RpYSIsImV4cCI6MTY5MDE3MzE2MSwiaWF0IjoxNjg4ODc3MTYxfQ.eNxtSKsD0H5PeOQAQetB_BcMe9n_dY0wuZMkZ0yRZFo",
+						"type": "default"
+					}
+				],
 				"url": {
 					"raw": "localhost:8081/api/documents",
 					"host": [
@@ -68,7 +76,13 @@
 			"name": "Get document by hash",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VybmFtZSIsImlzcyI6ImJveC1jdXN0b2RpYSIsImV4cCI6MTY5MDE3MzE2MSwiaWF0IjoxNjg4ODc3MTYxfQ.eNxtSKsD0H5PeOQAQetB_BcMe9n_dY0wuZMkZ0yRZFo",
+						"type": "default"
+					}
+				],
 				"url": {
 					"raw": "localhost:8081/api/documents?hashType=SHA-256&hash=F1834363342C9A361DB3A6E743A02188EE126F1D90CF5694B005E1056160267D",
 					"host": [
@@ -88,6 +102,35 @@
 							"key": "hash",
 							"value": "F1834363342C9A361DB3A6E743A02188EE126F1D90CF5694B005E1056160267D"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"username\",\r\n    \"password\": \"entrevistatecnica\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/api/auth/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"auth",
+						"login"
 					]
 				}
 			},
